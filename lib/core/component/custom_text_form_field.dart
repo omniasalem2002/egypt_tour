@@ -22,6 +22,7 @@ class CustomTextFormField extends StatelessWidget {
   final int? maxLines;
 
 
+
   const CustomTextFormField({
     super.key,
     this.contentPadding,
@@ -92,6 +93,7 @@ class CustomTextFormField extends StatelessWidget {
         validator: (value) {
           return validator(value);
         },
+
       ),
     );
   }

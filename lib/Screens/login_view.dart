@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:guru/core/component/custom_text_form_field.dart';
+import 'package:guru/core/component/form_for_tourist.dart';
 import 'package:guru/core/component/show_list_cities_dialog.dart';
 import 'package:guru/core/component/show_list_payment_dialog.dart';
 import 'package:guru/core/utils/colors_app.dart';
@@ -163,7 +164,7 @@ class _LoginViewState extends State<LoginView> {
                                 return Dialog(
                                   child: Container(
                                     padding: EdgeInsets.all(20),
-                                    child: Row(
+                                    child: const Row(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
                                         CircularProgressIndicator(),
@@ -181,7 +182,7 @@ class _LoginViewState extends State<LoginView> {
 
                             // Show a success message
                             ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
+                             const SnackBar(
                                   content:
                                       Text('Form submitted successfully!')),
                             );
@@ -249,16 +250,29 @@ class _LoginViewState extends State<LoginView> {
                                 },
                               ),
                               const SizedBox(height: 20),
-                              TextFormField(
-                                onTap: _presentDatePicker,
-                                controller: context
-                                    .read<TourGuideCubit>()
-                                    .birthDateController,
-                                decoration: const InputDecoration(
-                                  labelText: 'Birthdate',
-                                  fillColor: ColorsApp.primaryColor,
+                              CustomTextFormField(
+                                controller: context.read<TourGuideCubit>().birthDateController,
+                                hintText: 'Birthdate',
+                                isEnabled: false,
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                    color: ColorsApp.primaryColor,
+                                    width: 1.3,
+                                  ),
+                                  borderRadius: BorderRadius.circular(16.0),
                                 ),
-                                readOnly: true,
+                                suffixIcon: const Icon(
+                                  Icons.calendar_today,
+                                  size: 20,
+                                  color: ColorsApp.primaryColor,
+                                ),
+                                function: _presentDatePicker, // You can keep this empty or provide a dummy function
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter your birthdate';
+                                  }
+                                  return null;
+                                },
                               ),
                               const SizedBox(height: 20),
                               /*    DropdownButtonFormField<String>(
@@ -371,7 +385,7 @@ class _LoginViewState extends State<LoginView> {
                               context.read<TourGuideCubit>().image != null
                                   ? Image.file(
                                       context.read<TourGuideCubit>().image!)
-                                  : Text('No image selected.',
+                                  :const Text('No image selected.',
                                       style: TextStyle(color: Colors.red)),
                               ElevatedButton.icon(
                                 icon: const Icon(
@@ -476,99 +490,7 @@ class _LoginViewState extends State<LoginView> {
                         ),
                       ),
                     if (_selectedUserType == " Tourist  ")
-                      Form(
-                        //formKey
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const SizedBox(height: 20),
-                            Container(
-                              width: double
-                                  .infinity, // This makes the container take up the full width
-                              child: Align(
-                                alignment: Alignment
-                                    .centerLeft, // Align the text to the start of the container
-                                child: Text(
-                                  "Register As Tourist",
-                                  style: Styles.font18LightGreyBold(context),
-                                  textAlign: TextAlign
-                                      .left, // Align text inside the Text widget to the left
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 20),
-                            CustomTextFormField(
-                              hintText: "Enter Your Name",
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please enter your name';
-                                }
-                                if (value.length < 3) {
-                                  return 'Name must be at least 3 characters long';
-                                }
-                                return null;
-                              },
-                            ),
-                            const SizedBox(height: 20),
-                            CustomTextFormField(
-                              hintText: "Enter Your Phone Number",
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please enter your phone number';
-                                }
-                                if (value.length != 10) {
-                                  // Adjust length as per your requirement
-                                  return 'Phone number must be exactly 10 digits';
-                                }
-                                if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
-                                  return 'Phone number must contain only digits';
-                                }
-                                return null;
-                              },
-                            ),
-                            const SizedBox(height: 20),
-                            CustomTextFormField(
-                              hintText: "Enter your Country",
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please enter your Country';
-                                }
-                                if (value.length < 3) {
-                                  return 'Country must be at least 3 characters long';
-                                }
-                                return null;
-                              },
-                            ),
-                            const SizedBox(height: 20),
-                            CustomTextFormField(
-                              hintText: "Enter Places Want To Visit In Egypt",
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please enter Places Want To Visit In Egypt';
-                                }
-                                if (value.length < 3) {
-                                  return 'Places must be at least 3 characters long';
-                                }
-                                return null;
-                              },
-                            ),
-                            const SizedBox(height: 20),
-                            Padding(
-                              padding: const EdgeInsets.all(3),
-                              child: AppTextButton(
-                                buttonText: 'Create',
-                                textStyle:
-                                    Styles.font14LightGreyRegular(context),
-                                backgroundColor: ColorsApp.darkPrimary,
-                                onPressed: () {
-                                  //validateThenDoAddDepartment(context);
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                     const FormForTourist()
                   ],
                 )
               ],

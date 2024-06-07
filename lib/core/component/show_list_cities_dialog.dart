@@ -27,16 +27,9 @@ showListCityDialog(BuildContext ctxt, Size size) {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(children: [
-                    const Icon(
-                      Icons.location_city,
-                      color: ColorsApp.darkPrimary,
-                    ),
-                    SizedBox(
-                      width: 70,
-                    ),
                     Text(
                       _cities[index],
-                      style: Styles.font13BlueSemiBold(context)
+                      style: Styles.font17GreyRegular(context)
                           .copyWith(fontStyle: FontStyle.italic),
                     ),
                   ]),

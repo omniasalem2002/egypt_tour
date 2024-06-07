@@ -27,16 +27,9 @@ showListPaymentDialog(BuildContext ctxt, Size size) {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(children: [
-                    const Icon(
-                      Icons.payment_outlined,
-                      color: ColorsApp.darkPrimary,
-                    ),
-                    SizedBox(
-                      width: 70,
-                    ),
                     Text(
                       _paymentTypes[index],
-                      style: Styles.font14BlueSemiBold(context)
+                      style: Styles.font17GreyRegular(context)
                           .copyWith(fontStyle: FontStyle.italic),
                     ),
                   ]),

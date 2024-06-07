@@ -120,16 +120,38 @@ class _CountryCitySelectionState extends State<CountryCitySelection> {
                         textStyle: Styles.font14LightGreyRegular(context),
                         backgroundColor: ColorsApp.darkPrimary,
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) {
-                                return TourGuides(city: _selectedCity ??
-                                    'Default City'); // Provide a default city or empty string                              },
-                              }),
-                          );
+                          if (_selectedCity == null || _selectedCity!.isEmpty) {
+                            // Show error dialog if no city is selected
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: Text('Error'),
+                                  content: Text('Please select a city.'),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      child: Text('OK'),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          } else {
+                            // Proceed with navigation if a city is selected
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return TourGuides(city: _selectedCity!); // Pass the selected city
+                                },
+                              ),
+                            );
 
-                          //validateThenDoAddDepartment(context);
+                            //validateThenDoAddDepartment(context);
+                          }
                         },
                       ),
                     ),

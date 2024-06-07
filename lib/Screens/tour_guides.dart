@@ -16,7 +16,6 @@ class _TourGuidesState extends State<TourGuides> {
   @override
   void initState() {
     super.initState();
-    // Fetch tour guides for a specific city, e.g., 'New York'
     context.read<TourGuideCubit>().getTourGuides(widget.city);
   }
 
@@ -24,13 +23,13 @@ class _TourGuidesState extends State<TourGuides> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Tour Guides"),
+        title:Text(widget.city),
         centerTitle: true,
       ),
       body: BlocBuilder<TourGuideCubit, TourGuideState>(
         builder: (context, state) {
           if (state is TourGuideLoading) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (state is TourGuideFailure) {
             return Center(
                 child: Text('Failed to load tour guides: ${state.error}'));
@@ -39,7 +38,6 @@ class _TourGuidesState extends State<TourGuides> {
             return LayoutBuilder(
               builder: (context, constraints) {
                 int crossAxisCount = (constraints.maxWidth ~/ 150).toInt();
-
                 return Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: GridView.builder(
@@ -58,7 +56,7 @@ class _TourGuidesState extends State<TourGuides> {
               },
             );
           } else {
-            return Center(child: Text('Unknown state'));
+            return const Center(child:Text('Unknown state'));
           }
         },
       ),

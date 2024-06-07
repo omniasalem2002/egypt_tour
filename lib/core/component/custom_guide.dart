@@ -16,7 +16,7 @@ class CustomGuide extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (context) {
-              return const TourGuideDetail();
+              return TourGuideDetail(tourGuide: tourGuide,);
             },
           ),
         );
